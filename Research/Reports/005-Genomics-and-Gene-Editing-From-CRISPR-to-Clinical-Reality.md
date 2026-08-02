@@ -2,8 +2,8 @@
 # Research Report 005
 ## Genomics and Gene Editing: From CRISPR to Clinical Reality
 
-**Publication Date:** 2026-08-02  
-**Last Updated:** 2026-08-02  
+**Publication Date:** 2 August 2026  
+**Last Updated:** 2 August 2026 
 **Status:** Published  
 **Version:** 1.0  
 **Research Category:** Genomics / Gene Editing  
