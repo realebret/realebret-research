@@ -1,0 +1,25 @@
+name: Fix Draft Names
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rename drafts
+        run: python fix_draft_names.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "realebret"
+          git config user.email "research@realebret.com"
+          git add .
+          git commit -m "fix: rename research draft files 011-050"
+          git push
