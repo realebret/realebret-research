@@ -1,8 +1,8 @@
 # Research Report 006
 ## Computational Biology and Bioinformatics: AI-Driven Discovery
 
-**Publication Date:** 2026-08-02  
-**Last Updated:** 2026-08-02  
+**Publication Date:** 2 August 2026  
+**Last Updated:** 2 August 2026   
 **Status:** Published  
 **Version:** 1.0  
 **Research Category:** Computational Biology / Bioinformatics  
