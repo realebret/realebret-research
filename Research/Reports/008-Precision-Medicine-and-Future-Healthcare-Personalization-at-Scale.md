@@ -1,5 +1,4 @@
 ---
-
 # Research Report 008
 ## Precision Medicine and Future Healthcare: Personalization at Scale
 
