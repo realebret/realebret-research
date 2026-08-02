@@ -1,4 +1,3 @@
----
 
 # Research Report 005
 ## Genomics and Gene Editing: From CRISPR to Clinical Reality
@@ -9,8 +8,6 @@
 **Version:** 1.0  
 **Research Category:** Genomics / Gene Editing  
 **Evidence Level:** High
-
----
 
 # Abstract
 
