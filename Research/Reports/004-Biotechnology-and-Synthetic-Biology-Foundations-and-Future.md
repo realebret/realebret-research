@@ -1,5 +1,3 @@
----
-
 # Research Report 004
 ## Biotechnology and Synthetic Biology: Foundations and Future
 
@@ -8,9 +6,7 @@
 **Status:** Published  
 **Version:** 1.0  
 **Research Category:** Biotechnology / Synthetic Biology  
-**Evidence Level:**  --High--
-
----
+**Evidence Level:** High
 
 # Abstract
 
