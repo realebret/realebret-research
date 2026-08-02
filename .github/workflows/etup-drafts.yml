@@ -1,0 +1,49 @@
+name: Create Research Drafts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+
+    - name: Create Draft folders and files
+      run: |
+
+        mkdir -p Research/Drafts
+
+
+        touch Research/Drafts/004-Biotechnology-and-Synthetic-Biology-Landscape.md
+        touch Research/Drafts/005-Genomics-and-Gene-Editing-Technologies.md
+        touch Research/Drafts/006-Computational-Biology-and-Bioinformatics-Revolution.md
+        touch Research/Drafts/007-AI-Driven-Drug-Discovery-and-Protein-Engineering.md
+        touch Research/Drafts/008-Precision-Medicine-and-Future-Healthcare-Technologies.md
+        touch Research/Drafts/009-Longevity-Research-and-Aging-Science.md
+        touch Research/Drafts/010-Neuroscience-and-Brain-Computer-Interfaces.md
+
+
+        for i in $(seq -w 11 50)
+        do
+          touch Research/Drafts/${i}-Research-Report-Draft.md
+        done
+
+
+    - name: Commit files
+      run: |
+
+        git config user.name "realebret"
+
+        git config user.email "ahmetkralles@gmail.com"
+
+        git add .
+
+        git commit -m "create research draft files 004-050" || exit 0
+
+        git push
