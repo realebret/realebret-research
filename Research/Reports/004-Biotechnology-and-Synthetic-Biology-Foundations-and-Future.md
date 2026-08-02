@@ -10,7 +10,6 @@
 **Research Category:** Biotechnology / Synthetic Biology  
 **Evidence Level:** High
 
----
 
 # Abstract
 
