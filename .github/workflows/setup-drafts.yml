@@ -1,0 +1,26 @@
+name: Create Research Drafts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+
+      - name: Run setup script
+        run: python setup_repository.py
+
+      - name: Commit changes
+        run: |
+          git config user.name "realebret research"
+          git config user.email "research@realebret.com"
+          git add .
+          git commit -m "create research draft structure" || exit 0
+          git push
