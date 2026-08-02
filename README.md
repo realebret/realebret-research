@@ -35,9 +35,13 @@ This repository documents emerging technologies, scientific developments, resear
 
 Current publication:
 
-**Research Report 001 — Emerging Technologies Overview**
+**Research Report 002 — Artificial Intelligence Research Landscape 2026**
 
 Location:
+
+`Research/Reports/002-Artificial-Intelligence-Research-Landscape-2026.md`
+
+Previous publication:
 
 `Research/Reports/001-Emerging-Technologies-Overview.md`
 
@@ -49,6 +53,7 @@ Location:
 Research/
 └── Reports/
     ├── 001-Emerging-Technologies-Overview.md
+    ├── 002-Artificial-Intelligence-Research-Landscape-2026.md
     └── Future Reports
 
 Technology/
@@ -106,7 +111,7 @@ Planned research reports:
 - Research Report 005 — Advanced Materials and Nanotechnology 2026
 - Research Report 006 — Future Energy Technologies 2026
 - Research Report 007 — Space Technology and Exploration 2026
-...
+
 ---
 
 # License
