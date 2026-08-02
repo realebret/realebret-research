@@ -1,80 +1,61 @@
+import re
+import shutil
+import json
 from pathlib import Path
 from datetime import datetime
-import re
-import json
-import shutil
 
 
-DRAFTS_DIR = Path("Research/Drafts")
-REPORTS_DIR = Path("Research/Reports")
-ARCHIVE_DIR = Path("Research/Archive")
+ROOT = Path(".")
+DRAFTS = ROOT / "Research" / "Drafts"
+REPORTS = ROOT / "Research" / "Reports"
+ARCHIVE = ROOT / "Research" / "Archive"
 
-INDEX_FILE = Path("Research/Publication-Index.md")
-CHANGELOG_FILE = Path("CHANGELOG.md")
-METADATA_FILE = Path("Research/metadata.json")
-
-
-# ==========================
-# HELPERS
-# ==========================
+INDEX = ROOT / "Research" / "Publication-Index.md"
+METADATA = ROOT / "Research" / "metadata.json"
 
 
-def get_report_number(filename):
-
-    match = re.search(r"^(\d+)", filename)
-
+def get_number(filename):
+    match = re.match(r"(\d+)", filename)
     return int(match.group(1)) if match else None
 
 
-
 def get_title(content):
+    match = re.search(r"## (.+)", content)
+    return match.group(1) if match else "Unknown"
 
-    match = re.search(
-        r"## (.+)",
+
+def publish_file(file):
+
+    with open(file, "r", encoding="utf-8") as f:
+        content = f.read()
+
+
+    pub_date = re.search(
+        r"Publication Date:\s*(\d{4}-\d{2}-\d{2})",
         content
     )
 
-    if match:
-        return match.group(1).strip()
-
-    return "Unknown"
+    if not pub_date:
+        return
 
 
-
-def get_version_number(folder):
-
-    versions = list(
-        folder.glob("version-*.md")
+    date = datetime.strptime(
+        pub_date.group(1),
+        "%Y-%m-%d"
     )
 
-    if not versions:
-        return 1
 
-    numbers = []
-
-    for file in versions:
-
-        match = re.search(
-            r"version-(\d+)",
-            file.name
+    if date > datetime.now():
+        print(
+            f"Bekliyor: {file.name}"
         )
-
-        if match:
-            numbers.append(
-                int(match.group(1))
-            )
-
-    return max(numbers) + 1
+        return
 
 
-
-# ==========================
-# UPDATE REPORT STATUS
-# ==========================
+    number = get_number(file.name)
 
 
-def publish_content(content):
-
+    # Draft -> Published
     content = content.replace(
         "Status: Draft",
         "Status: Published"
@@ -85,325 +66,183 @@ def publish_content(content):
         "Version: 1.0"
     )
 
-
-    today = datetime.now().strftime(
-        "%Y-%m-%d"
-    )
-
-
     content = re.sub(
         r"Last Updated: .*",
-        f"Last Updated: {today}",
+        f"Last Updated: {datetime.now().strftime('%Y-%m-%d')}",
         content
     )
 
 
-    return content
-
-
-
-# ==========================
-# ARCHIVE
-# ==========================
-
-
-def archive_old(report_file, number):
-
-    folder = (
-        ARCHIVE_DIR /
-        f"Report-{number:03d}"
-    )
-
-    folder.mkdir(
-        parents=True,
+    REPORTS.mkdir(
         exist_ok=True
     )
 
 
-    version = get_version_number(folder)
+    target = REPORTS / file.name
 
 
-    destination = (
-        folder /
-        f"version-{version:03d}.md"
-    )
+    # Eski varsa archive
+    if target.exists():
 
+        archive_folder = (
+            ARCHIVE /
+            f"Report-{number:03d}"
+        )
 
-    shutil.move(
-        str(report_file),
-        str(destination)
-    )
-
-
-
-# ==========================
-# INDEX UPDATE
-# ==========================
-
-
-def update_index(number, title, date):
-
-    if not INDEX_FILE.exists():
-
-        INDEX_FILE.parent.mkdir(
+        archive_folder.mkdir(
             parents=True,
             exist_ok=True
         )
 
-        INDEX_FILE.write_text(
-            "# Realebret Research — Publication Index\n\n"
-            "| Report | Title | Date | Status |\n"
-            "|---|---|---|---|\n",
-            encoding="utf-8"
+
+        old_versions = list(
+            archive_folder.glob(
+                "version-*.md"
+            )
         )
 
 
-    content = INDEX_FILE.read_text(
-        encoding="utf-8"
-    )
+        version = len(old_versions)+1
 
 
-    row = (
-        f"| {number:03d} | "
-        f"{title} | "
-        f"{date} | Published |\n"
-    )
-
-
-    if f"| {number:03d} |" not in content:
-
-        content += row
-
-
-    INDEX_FILE.write_text(
-        content,
-        encoding="utf-8"
-    )
-
-
-
-# ==========================
-# CHANGELOG
-# ==========================
-
-
-def update_changelog(number, title, date):
-
-    if not CHANGELOG_FILE.exists():
-
-        CHANGELOG_FILE.write_text(
-            "# Changelog\n",
-            encoding="utf-8"
+        shutil.move(
+            target,
+            archive_folder /
+            f"version-{version:03d}.md"
         )
 
 
-    content = CHANGELOG_FILE.read_text(
-        encoding="utf-8"
+    shutil.move(
+        file,
+        target
     )
 
 
-    if f"Research Report {number:03d}" in content:
+    with open(
+        target,
+        "w",
+        encoding="utf-8"
+    ) as f:
+        f.write(content)
+
+
+    update_index(
+        number,
+        get_title(content),
+        pub_date.group(1)
+    )
+
+
+    print(
+        f"Yayınlandı: {file.name}"
+    )
+
+
+
+def update_index(number,title,date):
+
+    if not INDEX.exists():
         return
 
 
-    entry = f"""
-
-## {date}
-
-### Added
-
-- Research Report {number:03d} — {title}
-
-"""
-
-
-    CHANGELOG_FILE.write_text(
-        content + entry,
+    with open(
+        INDEX,
+        "r",
         encoding="utf-8"
+    ) as f:
+        data=f.read()
+
+
+    row=f"| {number:03d} | {title} | {date} | Published |\n"
+
+
+    if row not in data:
+
+        data=data.replace(
+            "|---|---|---|---|\n",
+            "|---|---|---|---|\n"+row
+        )
+
+
+    data=re.sub(
+        r"Last Updated: .*",
+        f"Last Updated: {datetime.now().strftime('%Y-%m-%d')}",
+        data
     )
 
 
+    with open(
+        INDEX,
+        "w",
+        encoding="utf-8"
+    ) as f:
+        f.write(data)
 
-# ==========================
-# METADATA
-# ==========================
 
 
 def update_metadata():
 
-    if not METADATA_FILE.exists():
+    if not METADATA.exists():
         return
 
 
-    data = json.loads(
-        METADATA_FILE.read_text(
-            encoding="utf-8"
-        )
-    )
-
-
-    published = len(
-        list(REPORTS_DIR.glob("*.md"))
-    )
-
-
-    drafts = len(
-        list(DRAFTS_DIR.glob("*.md"))
-    )
-
-
-    data["statistics"]["published"] = published
-
-    data["statistics"]["drafts"] = drafts
-
-
-    data["last_updated"] = (
-        datetime.now()
-        .strftime("%Y-%m-%d")
-    )
-
-
-    METADATA_FILE.write_text(
-        json.dumps(
-            data,
-            indent=2,
-            ensure_ascii=False
-        ),
+    with open(
+        METADATA,
+        "r",
         encoding="utf-8"
+    ) as f:
+        data=json.load(f)
+
+
+    data["statistics"]["published"] = len(
+        list(REPORTS.glob("*.md"))
+    )
+
+    data["statistics"]["drafts"] = len(
+        list(DRAFTS.glob("*.md"))
     )
 
 
+    data["last_updated"] = datetime.now().strftime(
+        "%Y-%m-%d"
+    )
 
-# ==========================
-# MAIN
-# ==========================
+
+    with open(
+        METADATA,
+        "w",
+        encoding="utf-8"
+    ) as f:
+        json.dump(
+            data,
+            f,
+            indent=2
+        )
+
 
 
 def main():
 
     print(
-        "Realebret Research Publisher Started"
+        "Realebret Research Publisher"
     )
 
 
-    published_reports = []
-
-
-    for draft in sorted(
-        DRAFTS_DIR.glob("*.md")
+    for file in sorted(
+        DRAFTS.glob("*.md")
     ):
 
-        content = draft.read_text(
-            encoding="utf-8"
-        )
-
-
-        date_match = re.search(
-            r"Publication Date:\s*(\d{4}-\d{2}-\d{2})",
-            content
-        )
-
-
-        if not date_match:
-            continue
-
-
-        publication_date = datetime.strptime(
-            date_match.group(1),
-            "%Y-%m-%d"
-        )
-
-
-        if publication_date > datetime.now():
-            continue
-
-
-
-        number = get_report_number(
-            draft.name
-        )
-
-
-        title = get_title(
-            content
-        )
-
-
-        destination = (
-            REPORTS_DIR /
-            draft.name
-        )
-
-
-        if destination.exists():
-
-            archive_old(
-                destination,
-                number
-            )
-
-
-        new_content = publish_content(
-            content
-        )
-
-
-        destination.parent.mkdir(
-            parents=True,
-            exist_ok=True
-        )
-
-
-        shutil.move(
-            str(draft),
-            str(destination)
-        )
-
-
-        destination.write_text(
-            new_content,
-            encoding="utf-8"
-        )
-
-
-        date = publication_date.strftime(
-            "%Y-%m-%d"
-        )
-
-
-        update_index(
-            number,
-            title,
-            date
-        )
-
-
-        update_changelog(
-            number,
-            title,
-            date
-        )
-
-
-        published_reports.append(
-            number
-        )
-
-
-        print(
-            f"Published Report {number:03d}"
-        )
-
+        publish_file(file)
 
 
     update_metadata()
 
 
     print(
-        f"Completed: {len(published_reports)} reports published."
+        "Tamamlandı."
     )
 
 
 
-if __name__ == "__main__":
+if __name__=="__main__":
     main()
