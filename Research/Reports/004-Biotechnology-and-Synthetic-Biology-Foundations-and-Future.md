@@ -1,8 +1,8 @@
 # Research Report 004
 ## Biotechnology and Synthetic Biology: Foundations and Future
 
-**Publication Date:** 2026-08-02  
-**Last Updated:** 2026-08-02  
+**Publication Date:** 2 August 2026  
+**Last Updated:** 2 August 2026   
 **Status:** Published  
 **Version:** 1.0  
 **Research Category:** Biotechnology / Synthetic Biology  
