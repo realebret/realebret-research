@@ -1,119 +1,126 @@
-# Realebret Research
+# README.md
 
-Independent research archive focused on science, technology, and future innovation.
+# realebret research
 
-This repository documents emerging technologies, scientific developments, research trends, and important discoveries across multiple disciplines.
-
----
-
-# Research Areas
-
-## Science
-
-- Astronomy
-- Biology
-- Physics
-- Earth Science
-
-## Technology
-
-- Artificial Intelligence
-- Biotechnology
-- Quantum Technologies
-- Robotics
-- Advanced Materials
-- Future Technologies
+**Independent Scientific Intelligence Archive**
 
 ---
 
-# Published Research
+## Overview
+
+realebret research is an independent scientific archive dedicated to discovering, analyzing, and documenting emerging research developments across multiple disciplines. Our mission is to organize scientific knowledge, analyze important trends, and create accessible research intelligence.
+
+---
+
+## Research Domains
+
+🌌 **Space & Astronomy**  
+🧬 **Life Sciences & Biotechnology**  
+⚛️ **Physics & Materials**  
+🌍 **Earth & Environmental Science**  
+💻 **Emerging Technologies**
+
+---
+
+## Research Focus
+
+- Scientific discovery tracking
+- Technology landscape analysis
+- Literature reviews
+- Research documentation
+- Future opportunity mapping
+
+---
+
+## Why This Exists
+
+Scientific progress is accelerating rapidly. The challenge is not only discovering information but understanding its importance and future impact.
+
+---
+
+## Repository Structure
+
+```
+realebret-research/
+├── README.md
+├── Research/
+│   └── Reports/
+│       ├── 001-Emerging-Technologies-Overview.md
+│       ├── 002-Artificial-Intelligence-Research-Landscape-2026.md
+│       └── 003-Quantum-Technologies-Research-Overview-2026.md
+├── Astronomy/
+├── Biology/
+├── Physics/
+├── Earth-Science/
+├── Technology/
+├── Books-and-Papers/
+├── Resources/
+├── create_tree.sh
+└── create_tree.ps1
+```
+
+---
+
+## Published Research
 
 | Report | Status | Date |
 |---|---|---|
 | Research Report 001 — Emerging Technologies Overview | Published | 1 August 2026 |
 | Research Report 002 — Artificial Intelligence Research Landscape 2026 | Published | 2 August 2026 |
-
-Current publication:
-
-**Research Report 002 — Artificial Intelligence Research Landscape 2026**
-
-Location:
-
-`Research/Reports/002-Artificial-Intelligence-Research-Landscape-2026.md`
-
-Previous publication:
-
-`Research/Reports/001-Emerging-Technologies-Overview.md`
+| Research Report 003 — Quantum Technologies Research Overview 2026 | Published | 2 August 2026 |
 
 ---
 
-# Research Structure
+## Current Publication
 
-```
-Research/
-└── Reports/
-    ├── 001-Emerging-Technologies-Overview.md
-    ├── 002-Artificial-Intelligence-Research-Landscape-2026.md
-    └── Future Reports
+**Research Report 003 — Quantum Technologies Research Overview 2026**
 
-Technology/
-├── Artificial Intelligence
-├── Quantum Technologies
-└── Emerging Technologies
+Location: `Research/Reports/003-Quantum-Technologies-Research-Overview-2026.md`
 
-Biology/
+---
 
-Physics/
+## Future Research Topics
 
-Astronomy/
+- Research Report 004 — Biotechnology Research Overview 2026
+- Research Report 005 — Energy Technologies Research Overview 2026
+- Research Report 006 — Space Exploration Research Overview 2026
 
-Earth-Science/
+---
 
-Books-and-Papers/
+## Repository Management
 
-Resources/
+### Directory Structure Creation
+
+Linux/Mac:
+```bash
+./create_tree.sh
 ```
 
----
-
-# Mission
-
-The goal of Realebret Research is to create a structured knowledge archive focused on scientific progress, emerging technologies, and future innovation.
-
-The repository follows a research-oriented documentation approach by organizing information into reports, notes, and supporting resources.
-
----
-
-# Publication System
-
-Each official research report follows a versioned publication system.
-
-Example:
-
-```
-Research Report 001
-Version: 1.0
-Status: Published
-Publication Date: 1 August 2026
-Last Updated: 1 August 2026
+Windows:
+```powershell
+.\create_tree.ps1
 ```
 
-Future updates will track changes through version numbers and update dates.
+### Adding New Reports
+
+1. Create report in `Research/Reports/` following naming convention:
+   - `XXX-Report-Title.md`
+2. Update README.md Published Research table
+3. Update Current Publication section
+4. Update Future Research Topics
 
 ---
 
-# Future Research Topics
+## Vision
 
-Planned research reports:
-
-- Research Report 003 — Quantum Technologies Research Overview 2026
-- Research Report 004 — Biotechnology and Synthetic Biology Landscape 2026
-- Research Report 005 — Advanced Materials and Nanotechnology 2026
-- Research Report 006 — Future Energy Technologies 2026
-- Research Report 007 — Space Technology and Exploration 2026
+Building an organized knowledge infrastructure for understanding the science and technologies that shape the future.
 
 ---
 
-# License
+## License
 
-This repository is intended for educational and research documentation purposes.
+All research reports are based on publicly available open-source data and are published for educational and research purposes.
+
+---
+
+*Maintained by **realebret research** — Independent Scientific Intelligence Archive*
