@@ -31,6 +31,7 @@ This repository documents emerging technologies, scientific developments, resear
 | Report | Status | Date |
 |---|---|---|
 | Research Report 001 — Emerging Technologies Overview | Published | 1 August 2026 |
+| Research Report 002 — Artificial Intelligence Research Landscape 2026 | Published | 2 August 2026 |
 
 Current publication:
 
@@ -100,13 +101,12 @@ Future updates will track changes through version numbers and update dates.
 
 Planned research reports:
 
-- Artificial Intelligence Research Landscape 2026
-- Biotechnology and Genetic Engineering Trends
-- Quantum Technology Overview
-- Future Energy Systems
-- Space Technology Development
-- Advanced Materials Research
-
+- Research Report 003 — Quantum Technologies Research Overview 2026
+- Research Report 004 — Biotechnology and Synthetic Biology Landscape 2026
+- Research Report 005 — Advanced Materials and Nanotechnology 2026
+- Research Report 006 — Future Energy Technologies 2026
+- Research Report 007 — Space Technology and Exploration 2026
+...
 ---
 
 # License
