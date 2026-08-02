@@ -1,5 +1,3 @@
-Research/Reports/005-Genomics-and-Gene-Editing-From-CRISPR-to-Clinical-Reality.md
-
 ---
 
 # Research Report 005
