@@ -81,4 +81,4 @@ The convergence of AI, biotechnology, quantum technologies, and advanced materia
 
 # Repository
 
-Part of the realebret Research knowledge archive.
+Part of the realebret Research knowledge archive. 
