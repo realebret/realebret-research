@@ -85,13 +85,12 @@ realebret-research/
 
 # Published Research
 
-## Research Report 001
+| Report                                                   | Status    | Date          |
+| -------------------------------------------------------- | --------- | ------------- |
+| **Research Report 001 — Emerging Technologies Overview** | Published | 1 August 2026 |
 
-### Emerging Technologies Overview
+Current publication: **Research Report 001**.
 
-A structured analysis of important technologies shaping future science and innovation.
-
-**Location:** `Technology/AI/Emerging-Technologies-Overview.md`
 
 ---
 
