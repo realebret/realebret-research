@@ -1,7 +1,3 @@
-Research/Reports/006-Computational-Biology-and-Bioinformatics-AI-Driven-Discovery.md
-
----
-
 # Research Report 006
 ## Computational Biology and Bioinformatics: AI-Driven Discovery
 
@@ -11,8 +7,6 @@ Research/Reports/006-Computational-Biology-and-Bioinformatics-AI-Driven-Discover
 **Version:** 1.0  
 **Research Category:** Computational Biology / Bioinformatics  
 **Evidence Level:** High
-
----
 
 # Abstract
 
