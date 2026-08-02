@@ -1,248 +1,111 @@
-import re
-import shutil
-import json
 from pathlib import Path
-from datetime import datetime
 
 
-ROOT = Path(".")
-DRAFTS = ROOT / "Research" / "Drafts"
-REPORTS = ROOT / "Research" / "Reports"
-ARCHIVE = ROOT / "Research" / "Archive"
-
-INDEX = ROOT / "Research" / "Publication-Index.md"
-METADATA = ROOT / "Research" / "metadata.json"
+DRAFT_DIR = Path("Research/Drafts")
 
 
-def get_number(filename):
-    match = re.match(r"(\d+)", filename)
-    return int(match.group(1)) if match else None
+reports = [
+    "004-Biotechnology-and-Synthetic-Biology-Landscape",
+    "005-Genomics-and-Gene-Editing-Technologies",
+    "006-Computational-Biology-and-Bioinformatics-Revolution",
+    "007-AI-Driven-Drug-Discovery-and-Protein-Engineering",
+    "008-Precision-Medicine-and-Future-Healthcare-Technologies",
+    "009-Longevity-Research-and-Aging-Science",
+    "010-Neuroscience-and-Brain-Computer-Interfaces",
+    "011-Advanced-Materials-and-Nanotechnology",
+    "012-Graphene-and-Two-Dimensional-Materials",
+    "013-Smart-Materials-and-Self-Healing-Technologies",
+    "014-Future-Battery-Technologies-and-Energy-Storage",
+    "015-Renewable-Energy-Technologies",
+    "016-Nuclear-Fusion-Energy-Research",
+    "017-Advanced-Nuclear-Technologies",
+    "018-Semiconductor-Technology-and-Chip-Manufacturing",
+    "019-AI-Hardware-and-Next-Generation-Computing",
+    "020-Neuromorphic-Computing-and-Brain-Inspired-Systems",
+    "021-Future-Internet-and-Digital-Infrastructure",
+    "022-6G-Networks-and-Future-Communication-Systems",
+    "023-Cloud-Computing-and-Edge-AI",
+    "024-Digital-Twins-and-Industrial-Simulation",
+    "025-Robotics-and-Autonomous-Systems",
+    "026-Humanoid-Robots-and-General-Purpose-Robotics",
+    "027-Industrial-Automation-and-Smart-Manufacturing",
+    "028-Autonomous-Vehicles-and-Transportation-Technologies",
+    "029-Drone-Technologies-and-Autonomous-Aviation",
+    "030-AI-Agents-and-Autonomous-Software-Systems",
+    "031-Space-Technology-and-Exploration",
+    "032-Satellite-Technologies-and-Space-Infrastructure",
+    "033-Lunar-Economy-and-Moon-Exploration",
+    "034-Mars-Exploration-and-Planetary-Science",
+    "035-Advanced-Space-Propulsion-Systems",
+    "036-Astrobiology-and-Search-for-Extraterrestrial-Life",
+    "037-Climate-Technologies-and-Earth-System-Science",
+    "038-Carbon-Capture-and-Geoengineering-Technologies",
+    "039-Artificial-General-Intelligence-Research-Landscape",
+    "040-AI-for-Scientific-Discovery-Automated-Scientist-Era",
+    "041-Quantum-Biology-and-Quantum-Life-Effects",
+    "042-Artificial-Life-and-Synthetic-Organisms",
+    "043-Machine-Consciousness-and-Cognitive-Architectures",
+    "044-Post-Quantum-Cryptography-and-Future-Cybersecurity",
+    "045-Advanced-Simulation-and-Digital-Reality-Technologies",
+    "046-Human-Enhancement-and-Human-Machine-Integration",
+    "047-Future-Education-Technologies-and-AI-Learning-Systems",
+    "048-Future-Cities-and-Intelligent-Civilization-Infrastructure",
+    "049-Technology-Forecast-2030-2050-Global-Scenarios",
+    "050-Future-Civilization-Science-Technology-and-Humanity-Beyond-2050"
+]
 
 
-def get_title(content):
-    match = re.search(r"## (.+)", content)
-    return match.group(1) if match else "Unknown"
+template = """# Research Report {number}
+## {title}
+
+**Publication Date:** YYYY-MM-DD  
+**Last Updated:** YYYY-MM-DD  
+**Status:** Draft  
+**Version:** 0.1  
+**Research Category:** Under Review  
+**Evidence Level:** Under Review
+
+---
+
+# Abstract
+
+"""
 
 
-def publish_file(file):
+def create_files():
 
-    with open(file, "r", encoding="utf-8") as f:
-        content = f.read()
-
-
-    pub_date = re.search(
-        r"Publication Date:\s*(\d{4}-\d{2}-\d{2})",
-        content
-    )
-
-    if not pub_date:
-        return
-
-
-    date = datetime.strptime(
-        pub_date.group(1),
-        "%Y-%m-%d"
-    )
-
-
-    if date > datetime.now():
-        print(
-            f"Bekliyor: {file.name}"
-        )
-        return
-
-
-    number = get_number(file.name)
-
-
-    # Draft -> Published
-    content = content.replace(
-        "Status: Draft",
-        "Status: Published"
-    )
-
-    content = content.replace(
-        "Version: 0.1",
-        "Version: 1.0"
-    )
-
-    content = re.sub(
-        r"Last Updated: .*",
-        f"Last Updated: {datetime.now().strftime('%Y-%m-%d')}",
-        content
-    )
-
-
-    REPORTS.mkdir(
+    DRAFT_DIR.mkdir(
+        parents=True,
         exist_ok=True
     )
 
 
-    target = REPORTS / file.name
+    for report in reports:
+
+        number = report[:3]
+
+        title = report[4:].replace("-", " ")
 
 
-    # Eski varsa archive
-    if target.exists():
-
-        archive_folder = (
-            ARCHIVE /
-            f"Report-{number:03d}"
-        )
-
-        archive_folder.mkdir(
-            parents=True,
-            exist_ok=True
-        )
+        file = DRAFT_DIR / f"{report}.md"
 
 
-        old_versions = list(
-            archive_folder.glob(
-                "version-*.md"
-            )
-        )
+        if file.exists():
+            print(f"Exists: {file.name}")
+            continue
 
 
-        version = len(old_versions)+1
-
-
-        shutil.move(
-            target,
-            archive_folder /
-            f"version-{version:03d}.md"
+        file.write_text(
+            template.format(
+                number=number,
+                title=title
+            ),
+            encoding="utf-8"
         )
 
 
-    shutil.move(
-        file,
-        target
-    )
+        print(f"Created: {file.name}")
 
 
-    with open(
-        target,
-        "w",
-        encoding="utf-8"
-    ) as f:
-        f.write(content)
-
-
-    update_index(
-        number,
-        get_title(content),
-        pub_date.group(1)
-    )
-
-
-    print(
-        f"Yayınlandı: {file.name}"
-    )
-
-
-
-def update_index(number,title,date):
-
-    if not INDEX.exists():
-        return
-
-
-    with open(
-        INDEX,
-        "r",
-        encoding="utf-8"
-    ) as f:
-        data=f.read()
-
-
-    row=f"| {number:03d} | {title} | {date} | Published |\n"
-
-
-    if row not in data:
-
-        data=data.replace(
-            "|---|---|---|---|\n",
-            "|---|---|---|---|\n"+row
-        )
-
-
-    data=re.sub(
-        r"Last Updated: .*",
-        f"Last Updated: {datetime.now().strftime('%Y-%m-%d')}",
-        data
-    )
-
-
-    with open(
-        INDEX,
-        "w",
-        encoding="utf-8"
-    ) as f:
-        f.write(data)
-
-
-
-def update_metadata():
-
-    if not METADATA.exists():
-        return
-
-
-    with open(
-        METADATA,
-        "r",
-        encoding="utf-8"
-    ) as f:
-        data=json.load(f)
-
-
-    data["statistics"]["published"] = len(
-        list(REPORTS.glob("*.md"))
-    )
-
-    data["statistics"]["drafts"] = len(
-        list(DRAFTS.glob("*.md"))
-    )
-
-
-    data["last_updated"] = datetime.now().strftime(
-        "%Y-%m-%d"
-    )
-
-
-    with open(
-        METADATA,
-        "w",
-        encoding="utf-8"
-    ) as f:
-        json.dump(
-            data,
-            f,
-            indent=2
-        )
-
-
-
-def main():
-
-    print(
-        "Realebret Research Publisher"
-    )
-
-
-    for file in sorted(
-        DRAFTS.glob("*.md")
-    ):
-
-        publish_file(file)
-
-
-    update_metadata()
-
-
-    print(
-        "Tamamlandı."
-    )
-
-
-
-if __name__=="__main__":
-    main()
+if __name__ == "__main__":
+    create_files()
