@@ -4,8 +4,8 @@
 # Research Report 007
 ## AI-Driven Drug Discovery and Protein Engineering: The New Frontier
 
-**Publication Date:** 2026-08-02  
-**Last Updated:** 2026-08-02  
+**Publication Date:** 2 August 2026  
+**Last Updated:** 2 August 2026  
 **Status:** Published  
 **Version:** 1.0  
 **Research Category:** Drug Discovery / Protein Engineering  
