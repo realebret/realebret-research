@@ -87,9 +87,11 @@ realebret-research/
 
 ## Research Report 001
 
-**Emerging Technologies Overview**
+### Emerging Technologies Overview
 
 A structured analysis of important technologies shaping future science and innovation.
+
+**Location:** `Technology/AI/Emerging-Technologies-Overview.md`
 
 ---
 
